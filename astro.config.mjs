@@ -7,5 +7,5 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   site: 'https://mfranck340.github.io',
   base: '/mfranck340.github.io',
-  integrations: [mdx(), sitemap(), tailwind()]
+  integrations: [mdx(), tailwind()] //sitemap()
 });
