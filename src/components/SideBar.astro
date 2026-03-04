@@ -3,6 +3,8 @@ import SideBarFooter from "./SideBarFooter.astro";
 import { Image } from "astro:assets";
 import SideBarMenu from "./SideBarMenu.astro";
 const { sideBarActiveItemID } = Astro.props;
+
+const BASE = import.meta.env.BASE_URL;
 ---
 
 <div class="drawer-side z-40">
@@ -13,10 +15,10 @@ const { sideBarActiveItemID } = Astro.props;
     <div class="stars-overlay"></div>
 
     <div class="w-fit mx-auto mt-5 mb-6 relative z-10">
-      <a href="/">
+      <a href={BASE}>
         <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">
           <div class="w-[8.5rem]">
-            <Image class="mask mask-circle" format="webp" width={300} height={300} src="/profile.webp" alt="Profile image" />
+            <Image class="mask mask-circle" format="webp" width={300} height={300} src="/mfranck340.github.io/profile.webp" alt="Profile image" />
           </div>
         </div>
       </a>
