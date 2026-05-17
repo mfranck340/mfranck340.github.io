@@ -1,96 +1,119 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TimeLineElement from "../components/cv/TimeLine.astro";
+
+const education = [
+  {
+    title: "PhD student in Advanced Electronics and Intelligent Systems",
+    subtitle: "2025 - Present / University of Alcalá, Spain",
+    badge: "PhD",
+    description:
+      "Research focused on artificial intelligence, decision making, and control for autonomous driving systems.",
+  },
+  {
+    title: "M.Sc. in Cybersecurity",
+    subtitle: "2024 - 2025 / University of Alcalá, Spain",
+    badge: "M.Sc.",
+    description:
+      "Graduated with the Extraordinary Award as the top-ranked student of the cohort, with graduate training in cybersecurity, systems security, and secure software-oriented engineering.",
+  },
+  {
+    title: "B.Sc. in Computer Science",
+    subtitle: "2019 - 2024 / University of Alcalá, Spain",
+    badge: "B.Sc.",
+    description:
+      "Graduated in Computer Science, receiving honors distinction for the Bachelor's thesis.",
+  },
+];
+
+const experience = [
+  {
+    title: "Research Staff",
+    subtitle: "August 2024 - Present / Department of Electronics, University of Alcalá",
+    badge: "Research",
+    description:
+      "Research staff member at RobeSafe Research Group, working on AI-based autonomous driving topics.",
+  },
+  {
+    title: "Research Intern",
+    subtitle: "April 2024 - July 2024 / RobeSafe, University of Alcalá",
+    badge: "Internship",
+    description:
+      "Research internship in autonomous driving, perception, and intelligent vehicle systems.",
+  },
+  {
+    title: "Software Developer",
+    subtitle: "June 2023 - September 2023 / PLENUM, Madrid, Spain",
+    badge: "Software",
+    description:
+      "Software development experience in a professional engineering environment.",
+  },
+];
+
 ---
 
 <BaseLayout title="Resume" sideBarActiveItemID="cv">
-  <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Profile</div>
-  </div>
+  <section class="mb-10 mt-5">
+    <div class="mb-8 border-b border-base-300 pb-6">
+      <p class="text-sm font-semibold uppercase tracking-wide text-primary">Curriculum Vitae</p>
+      <h1 class="mt-1 text-4xl font-bold">Academic & Research Profile</h1>
+      <p class="mt-3 max-w-3xl text-base-content/75">
+        PhD student working on artificial intelligence for control and decision making in autonomous driving.
+      </p>
+    </div>
 
-  <!-- <div class="mb-10 text-justify">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </div> -->
+    <div class="mb-10 grid gap-4 md:grid-cols-3">
+      <div class="rounded-lg border border-base-300 bg-base-100 p-5 shadow-sm">
+        <p class="text-sm font-semibold uppercase tracking-wide text-base-content/60">Current Role</p>
+        <p class="mt-2 text-xl font-bold">Research Staff</p>
+        <p class="mt-1 text-sm text-base-content/70">RobeSafe Research Group</p>
+      </div>
+      <div class="rounded-lg border border-base-300 bg-base-100 p-5 shadow-sm">
+        <p class="text-sm font-semibold uppercase tracking-wide text-base-content/60">Institution</p>
+        <p class="mt-2 text-xl font-bold">University of Alcalá</p>
+        <p class="mt-1 text-sm text-base-content/70">Department of Electronics</p>
+      </div>
+      <div class="rounded-lg border border-base-300 bg-base-100 p-5 shadow-sm">
+        <p class="text-sm font-semibold uppercase tracking-wide text-base-content/60">Focus</p>
+        <p class="mt-2 text-xl font-bold">Autonomous Driving</p>
+        <p class="mt-1 text-sm text-base-content/70">AI, control, and decision making</p>
+      </div>
+    </div>
 
-  <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Education</div>
-  </div>
+    <div class="mb-10 rounded-lg border border-base-300 bg-base-100 p-6 shadow-sm">
+      <h2 class="mb-3 text-2xl font-bold">Profile</h2>
+      <p class="leading-relaxed text-base-content/75">
+        I am a PhD student at the University of Alcalá and a research staff member in the RobeSafe Research Group.
+        My work focuses on artificial intelligence, vehicle motion, and self-driving vehicle architectures, with a
+        special interest in decision making and control for autonomous driving.
+      </p>
+    </div>
 
-  <div class="time-line-container grid gap-4 mb-10">
-    <TimeLineElement
-      title="PhD student in Advanced Electronics and Intelligent Systems"
-      subtitle="2025 at University of Alcalá, Spain"
-    />
-    <TimeLineElement
-      title="M.Sc. in Cybersecurity"
-      subtitle="2024 to 2025 at University of Alcalá, Spain"
-    />
-    <TimeLineElement
-      title="B.Sc. in Computer Science"
-      subtitle="2019 to 2024 at University of Alcalá, Spain"
-    />
-  </div>
+    <div class="mb-5 flex items-center gap-3">
+      <h2 class="text-3xl font-bold">Experience</h2>
+      <span class="h-px flex-1 bg-base-300"></span>
+    </div>
 
-  <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Experience</div>
-  </div>
+    <div class="mb-10">
+      {experience.map((item) => (
+        <TimeLineElement title={item.title} subtitle={item.subtitle} badge={item.badge}>
+          {item.description}
+        </TimeLineElement>
+      ))}
+    </div>
 
-  <div class="time-line-container mb-10">
-    <TimeLineElement
-      title="Research Staff"
-      subtitle="From August 2024 at Department of Electronics, University de Alcalá"
-    >
-      <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident. -->
-    </TimeLineElement>
-    <TimeLineElement
-      title="Research Intern"
-      subtitle="From April 2024 to July 2024 at Robesafe, Department of Electronics, University de Alcalá"
-    >
-      <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident. -->
-    </TimeLineElement>
-    <TimeLineElement
-      title="Software Developer"
-      subtitle="From June 2023 to September 2023 at PLENUM, Madrid, Spain"
-    >
-      <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident. -->
-    </TimeLineElement>
-  </div>
+    <div class="mb-5 flex items-center gap-3">
+      <h2 class="text-3xl font-bold">Education</h2>
+      <span class="h-px flex-1 bg-base-300"></span>
+    </div>
 
-  <!-- <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Certifications</div>
-  </div>
+    <div class="mb-10">
+      {education.map((item) => (
+        <TimeLineElement title={item.title} subtitle={item.subtitle} badge={item.badge}>
+          {item.description}
+        </TimeLineElement>
+      ))}
+    </div>
 
-  <ul class="list-disc mx-6 mb-10 grid gap-2">
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
-    </li>
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
-    </li>
-  </ul>
-
-  <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Skills</div>
-  </div> -->
-
-  <!-- <ul class="list-disc md:columns-5 columns-2 mx-6">
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-  </ul> -->
+  </section>
 </BaseLayout>

@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { publications } from "../../content/publications";
+
+export function getStaticPaths() {
+  return publications.map((publication) => ({
+    params: { slug: publication.slug },
+    props: { publication },
+  }));
+}
+
+const { publication } = Astro.props;
+---
+
+<BaseLayout
+  title={publication.title}
+  description={publication.summary}
+  image={publication.image}
+  sideBarActiveItemID="publications"
+  ogType="article"
+>
+  <article class="mb-10 mt-5">
+    <a href="/publications" class="mb-6 inline-block text-sm font-semibold text-primary hover:text-accent">
+      Back to publications
+    </a>
+
+    <div class="mb-8 overflow-hidden rounded-lg border border-base-300 bg-base-100 shadow-sm">
+      <img src={publication.image} alt="" class="h-64 w-full object-cover" />
+    </div>
+
+    <div class="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-base-content/60">
+      <span>{publication.year}</span>
+      <span aria-hidden="true">/</span>
+      <span>{publication.type}</span>
+      <span aria-hidden="true">/</span>
+      <span>{publication.venue}</span>
+    </div>
+
+    <h1 class="mb-4 text-4xl font-bold leading-tight">{publication.title}</h1>
+
+    <p class="mb-6 text-base-content/70">{publication.authors.join(", ")}</p>
+
+    <div class="mb-8 flex flex-wrap gap-2">
+      {publication.links.map((link) => (
+        <a href={link.url} target="_blank" class="btn btn-sm btn-outline">
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <section class="mb-8">
+      <h2 class="mb-3 text-2xl font-bold">Summary</h2>
+      <p class="text-lg leading-relaxed text-base-content/80">{publication.summary}</p>
+    </section>
+
+    <section>
+      <h2 class="mb-3 text-2xl font-bold">About This Paper</h2>
+      <p class="leading-relaxed text-base-content/80">{publication.abstract}</p>
+    </section>
+  </article>
+</BaseLayout>

@@ -1,0 +1,297 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { news } from "../content/news";
+
+const defaultNewsImage = "/post_img.webp";
+const newsGroups = news.map((yearGroup) => ({
+  ...yearGroup,
+  items: yearGroup.items.map((item) => ({
+    ...item,
+    year: yearGroup.year,
+    image: (item as { image?: string }).image ?? defaultNewsImage,
+    imagePosition: (item as { imagePosition?: string }).imagePosition ?? "center",
+    eventLayout: (item as { eventLayout?: string }).eventLayout ?? "split",
+    cardType: (item as { cardType?: string }).cardType ?? "event",
+    milestoneType: (item as { milestoneType?: string }).milestoneType ?? "Milestone",
+    publicationType: (item as { publicationType?: string }).publicationType ?? "Publication",
+    publicationVenue: (item as { publicationVenue?: string }).publicationVenue,
+  })),
+}));
+---
+
+<BaseLayout title="News & Updates" sideBarActiveItemID="news">
+  <section class="mb-10 mt-5">
+    <div class="mb-8 border-b border-base-300 pb-5">
+      <p class="text-sm font-semibold uppercase tracking-wide text-primary">Research activity</p>
+      <h1 class="mt-1 text-4xl font-bold">News & Updates</h1>
+      <p class="mt-3 max-w-3xl text-base-content/75">
+        Recent publications, conference presentations, and project milestones.
+      </p>
+    </div>
+
+    <div class="space-y-12">
+      {newsGroups.map((yearGroup) => (
+        <section aria-labelledby={`news-year-${yearGroup.year}`}>
+          <div class="sticky top-16 z-20 mb-5 flex items-center gap-4 bg-base-100/95 py-2 backdrop-blur supports-[backdrop-filter]:bg-base-100/80 lg:top-0">
+            <h2 id={`news-year-${yearGroup.year}`} class="shrink-0 text-2xl font-bold text-primary">{yearGroup.year}</h2>
+            <span class="h-px flex-1 bg-gradient-to-r from-primary/70 via-base-300 to-transparent" aria-hidden="true"></span>
+          </div>
+
+          <div class="relative pl-5">
+            <span class="absolute bottom-8 left-0 top-8 w-px bg-base-300" aria-hidden="true"></span>
+
+            <div class="space-y-7">
+              {yearGroup.items.map((item) => (
+                <div class="relative">
+                  <span
+                    class:list={[
+                      "absolute left-[-1.45rem] top-8 z-10 h-3 w-3 rounded-full ring-4 ring-base-100",
+                      item.cardType === "publication" && "bg-primary",
+                      item.cardType === "event" && "bg-secondary",
+                      item.cardType === "milestone" && "bg-info",
+                      item.cardType === "achievement" && "bg-accent",
+                    ]}
+                    aria-hidden="true"
+                  ></span>
+          {item.cardType === "publication" && (
+            <article class="group overflow-hidden rounded-lg border border-base-300 bg-base-100 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md">
+              <div class="grid gap-0 md:grid-cols-[240px_1fr]">
+                <a
+                  href={item.link ?? "#"}
+                  class:list={[
+                    "relative block min-h-48 overflow-hidden bg-base-200 md:min-h-full",
+                    !item.link && "pointer-events-none",
+                  ]}
+                  aria-label={item.title.replace(/<[^>]*>/g, "")}
+                >
+                  <img
+                    src={item.image}
+                    alt=""
+                    loading="lazy"
+                    class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105 md:h-full"
+                    style={`object-position: ${item.imagePosition};`}
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-r from-base-300/35 to-transparent"></div>
+                </a>
+
+                <div class="p-5">
+                  <div class="mb-4 flex items-center gap-3">
+                    <div class="rounded-md bg-primary px-3 py-2 text-primary-content">
+                      <span class="block text-xs font-semibold uppercase leading-none">{item.date}</span>
+                      <span class="mt-1 block text-lg font-bold leading-none">{item.year}</span>
+                    </div>
+                    <span class="badge badge-outline">{item.publicationType}</span>
+                    {item.publicationVenue && (
+                      <span class="badge badge-ghost">{item.publicationVenue}</span>
+                    )}
+                    <span class="h-px flex-1 bg-base-300 transition-colors group-hover:bg-primary/40"></span>
+                  </div>
+
+                  <h2 class="mb-3 text-2xl font-bold leading-snug">
+                    {item.link ? (
+                      <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-primary">
+                        <span set:html={item.title} />
+                        {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                      </a>
+                    ) : (
+                      <span class="inline-flex items-center gap-2">
+                        <span set:html={item.title} />
+                        {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                      </span>
+                    )}
+                  </h2>
+
+                  <p class="text-base-content/75" set:html={item.description}></p>
+                </div>
+              </div>
+            </article>
+          )}
+
+          {item.cardType === "event" && (
+            <article class="group overflow-hidden rounded-lg border border-base-300 bg-base-100 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-secondary/60 hover:shadow-md">
+              {item.eventLayout === "wide-image" ? (
+                <>
+                  <div class="p-6">
+                    <div class="mb-5 flex items-center gap-3">
+                      <div class="rounded-md bg-secondary px-3 py-2 text-secondary-content">
+                        <span class="block text-xs font-semibold uppercase leading-none">{item.date}</span>
+                        <span class="mt-1 block text-lg font-bold leading-none">{item.year}</span>
+                      </div>
+                      <span class="badge badge-outline">Event</span>
+                    </div>
+
+                    <h2 class="mb-3 text-3xl font-bold leading-tight">
+                      {item.link ? (
+                        <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-secondary">
+                          <span set:html={item.title} />
+                          {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                        </a>
+                      ) : (
+                        <span class="inline-flex items-center gap-2">
+                          <span set:html={item.title} />
+                          {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                        </span>
+                      )}
+                    </h2>
+
+                    <p class="text-base-content/75" set:html={item.description}></p>
+                  </div>
+
+                  <a
+                    href={item.link ?? "#"}
+                    class:list={[
+                      "relative block aspect-[16/7] overflow-hidden bg-base-200",
+                      !item.link && "pointer-events-none",
+                    ]}
+                    aria-label={item.title.replace(/<[^>]*>/g, "")}
+                  >
+                    <img
+                      src={item.image}
+                      alt=""
+                      loading="lazy"
+                      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      style={`object-position: ${item.imagePosition};`}
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-base-100/15 to-transparent"></div>
+                  </a>
+                </>
+              ) : (
+                <div class="grid gap-0 md:grid-cols-2">
+                  <div class="p-6">
+                    <div class="mb-5 flex items-center gap-3">
+                      <div class="rounded-md bg-secondary px-3 py-2 text-secondary-content">
+                        <span class="block text-xs font-semibold uppercase leading-none">{item.date}</span>
+                        <span class="mt-1 block text-lg font-bold leading-none">{item.year}</span>
+                      </div>
+                      <span class="badge badge-outline">Event</span>
+                    </div>
+
+                    <h2 class="mb-3 text-3xl font-bold leading-tight">
+                      {item.link ? (
+                        <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-secondary">
+                          <span set:html={item.title} />
+                          {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                        </a>
+                      ) : (
+                        <span class="inline-flex items-center gap-2">
+                          <span set:html={item.title} />
+                          {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                        </span>
+                      )}
+                    </h2>
+
+                    <p class="text-base-content/75" set:html={item.description}></p>
+                  </div>
+
+                  <a
+                    href={item.link ?? "#"}
+                    class:list={[
+                      "relative block aspect-[4/3] overflow-hidden bg-base-200 md:aspect-square",
+                      !item.link && "pointer-events-none",
+                    ]}
+                    aria-label={item.title.replace(/<[^>]*>/g, "")}
+                  >
+                    <img
+                      src={item.image}
+                      alt=""
+                      loading="lazy"
+                      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      style={`object-position: ${item.imagePosition};`}
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-l from-transparent to-base-100/20"></div>
+                  </a>
+                </div>
+              )}
+            </article>
+          )}
+
+          {item.cardType === "milestone" && (
+            <article class="group overflow-hidden rounded-lg border border-base-300 bg-base-100 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-info/60 hover:shadow-md">
+              <div class="grid gap-0 md:grid-cols-[1fr_150px]">
+                <div class="p-5">
+                  <div class="mb-4 flex flex-wrap items-center gap-2">
+                    <span class="rounded-md bg-info px-3 py-2 text-sm font-bold text-info-content">
+                      {item.date} {item.year}
+                    </span>
+                    <span class="badge badge-outline">{item.milestoneType}</span>
+                  </div>
+
+                  <h2 class="mb-3 text-2xl font-bold leading-snug">
+                    {item.link ? (
+                      <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-info">
+                        <span set:html={item.title} />
+                        {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                      </a>
+                    ) : (
+                      <span class="inline-flex items-center gap-2">
+                        <span set:html={item.title} />
+                        {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                      </span>
+                    )}
+                  </h2>
+
+                  <p class="text-base-content/75" set:html={item.description}></p>
+                </div>
+
+                <div class="flex items-center justify-center border-t border-base-300 bg-info/10 p-5 text-info md:border-l md:border-t-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v18"></path>
+                    <path d="M5 8h14"></path>
+                    <path d="M7 16h10"></path>
+                    <path d="m15 5 4 3-4 3"></path>
+                    <path d="m9 13-4 3 4 3"></path>
+                  </svg>
+                </div>
+              </div>
+            </article>
+          )}
+
+          {item.cardType === "achievement" && (
+            <article class="group overflow-hidden rounded-lg border border-base-300 bg-base-100 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-md">
+              <div class="grid gap-0 md:grid-cols-[1fr_180px]">
+                <div class="p-5">
+                  <div class="mb-4 flex flex-wrap items-center gap-2">
+                    <span class="rounded-md bg-accent px-3 py-2 text-sm font-bold text-accent-content">
+                      {item.date} {item.year}
+                    </span>
+                    <span class="badge badge-outline">Achievement</span>
+                  </div>
+
+                  <h2 class="mb-3 text-2xl font-bold leading-snug">
+                    {item.link ? (
+                      <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-accent">
+                        <span set:html={item.title} />
+                        {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                      </a>
+                    ) : (
+                      <span class="inline-flex items-center gap-2">
+                        <span set:html={item.title} />
+                        {item.icon && <span class="shrink-0" set:html={item.icon} />}
+                      </span>
+                    )}
+                  </h2>
+
+                  <p class="text-base-content/75" set:html={item.description}></p>
+                </div>
+
+                <div class="flex items-center justify-center bg-base-200 p-5">
+                  <div class="flex h-28 w-28 items-center justify-center rounded-lg border border-accent/40 bg-base-100 text-accent shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M15 3H9a3 3 0 0 0-3 3v14l6-3 6 3V6a3 3 0 0 0-3-3Z"></path>
+                      <path d="m9 10 2 2 4-4"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+          )}
+
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

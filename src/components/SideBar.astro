@@ -6,11 +6,55 @@ const { sideBarActiveItemID } = Astro.props;
 ---
 
 <div class="drawer-side z-40">
-  <label for="my-drawer" class="drawer-overlay"></label>
 
   <aside class="sidebar-stars px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col relative overflow-hidden">
     <!-- overlay de estrellas -->
     <div class="stars-overlay"></div>
+
+    <button
+      id="theme-toggle"
+      class="btn btn-circle btn-sm btn-ghost absolute right-4 top-4 z-20 bg-base-100/80 shadow-md backdrop-blur"
+      type="button"
+      aria-label="Switch to light theme"
+      title="Toggle theme"
+    >
+      <svg
+        id="theme-toggle-sun"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-4 w-4"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </svg>
+      <svg
+        id="theme-toggle-moon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="hidden h-4 w-4"
+        aria-hidden="true"
+      >
+        <path d="M12 3a6 6 0 0 0 9 7.3A9 9 0 1 1 12 3Z"></path>
+      </svg>
+    </button>
 
     <div class="w-fit mx-auto mt-5 mb-6 relative z-10">
       <a href="/">
@@ -93,6 +137,39 @@ const { sideBarActiveItemID } = Astro.props;
     animation: bigStarsPulse 4.8s ease-in-out infinite;
   }
 
+  :global(html[data-theme="light"]) .stars-overlay {
+    background:
+      radial-gradient(circle at 16% 18%, rgba(37, 99, 235, .34) 0 1.4px, transparent 2.6px),
+      radial-gradient(circle at 72% 16%, rgba(15, 23, 42, .22) 0 1.2px, transparent 2.4px),
+      radial-gradient(circle at 35% 38%, rgba(37, 99, 235, .24) 0 1.3px, transparent 2.5px),
+      radial-gradient(circle at 83% 44%, rgba(14, 165, 233, .26) 0 1.3px, transparent 2.6px),
+      radial-gradient(circle at 22% 68%, rgba(15, 23, 42, .18) 0 1.1px, transparent 2.3px),
+      radial-gradient(circle at 62% 78%, rgba(37, 99, 235, .22) 0 1.4px, transparent 2.8px);
+    opacity: .75;
+    filter: none;
+    animation: networkDrift 9s ease-in-out infinite;
+  }
+
+  :global(html[data-theme="light"]) .stars-overlay::before {
+    opacity: .34;
+    filter: none;
+    background:
+      linear-gradient(26deg, transparent 0 14%, rgba(37, 99, 235, .32) 14.3% 14.6%, transparent 14.9% 100%),
+      linear-gradient(151deg, transparent 0 21%, rgba(15, 23, 42, .22) 21.2% 21.5%, transparent 21.8% 100%),
+      linear-gradient(82deg, transparent 0 43%, rgba(14, 165, 233, .24) 43.2% 43.5%, transparent 43.8% 100%),
+      linear-gradient(124deg, transparent 0 63%, rgba(37, 99, 235, .22) 63.2% 63.5%, transparent 63.8% 100%);
+    animation: networkLines 12s ease-in-out infinite;
+  }
+
+  :global(html[data-theme="light"]) .stars-overlay::after {
+    opacity: .18;
+    filter: none;
+    background:
+      linear-gradient(135deg, transparent 0 30%, rgba(14, 165, 233, .22) 45%, transparent 62%),
+      radial-gradient(circle at 78% 22%, rgba(37, 99, 235, .16) 0 32px, transparent 72px);
+    animation: none;
+  }
+
   @keyframes starsTwinkle {
     0%, 100% { opacity: .35; filter: drop-shadow(0 0 4px rgba(255,255,255,.18)); }
     50%      { opacity: .75; filter: drop-shadow(0 0 10px rgba(255,255,255,.35)); }
@@ -107,6 +184,16 @@ const { sideBarActiveItemID } = Astro.props;
     0%, 35%, 100% { opacity: 0; }
     50%           { opacity: .55; }
     65%           { opacity: .15; }
+  }
+
+  @keyframes networkDrift {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -3px, 0); }
+  }
+
+  @keyframes networkLines {
+    0%, 100% { opacity: .26; }
+    50% { opacity: .42; }
   }
 
   /* Respeta usuarios con reduced motion */

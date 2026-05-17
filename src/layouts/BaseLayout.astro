@@ -18,8 +18,12 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
   <head>
+    <script is:inline>
+      const savedTheme = localStorage.getItem("theme");
+      document.documentElement.dataset.theme = savedTheme || "light";
+    </script>
     <BaseHead title={title} description={description} image={image} , ogType={ogType} />
     {TRANSITION_API && <ViewTransitions />}
   </head>
@@ -37,5 +41,50 @@ const {
       </div>
       {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
     </div>
+    <script>
+      const getStoredTheme = () => localStorage.getItem("theme") || "light";
+      const applyTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+      };
+
+      const setupThemeToggle = () => {
+        const themeToggle = document.getElementById("theme-toggle");
+        const sunIcon = document.getElementById("theme-toggle-sun");
+        const moonIcon = document.getElementById("theme-toggle-moon");
+
+        const setToggleState = (theme) => {
+          const isDark = theme === "dark";
+          sunIcon?.classList.toggle("hidden", !isDark);
+          moonIcon?.classList.toggle("hidden", isDark);
+          themeToggle?.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+        };
+
+        const currentTheme = document.documentElement.dataset.theme || getStoredTheme();
+        applyTheme(currentTheme);
+        setToggleState(currentTheme);
+
+        if (!themeToggle) return;
+
+        themeToggle.onclick = () => {
+          const theme = document.documentElement.dataset.theme || "light";
+          const nextTheme = theme === "dark" ? "light" : "dark";
+          applyTheme(nextTheme);
+          localStorage.setItem("theme", nextTheme);
+          setToggleState(nextTheme);
+        };
+      };
+
+      setupThemeToggle();
+      document.addEventListener("astro:page-load", setupThemeToggle);
+      document.addEventListener("astro:before-swap", (event) => {
+        event.newDocument.documentElement.dataset.theme = getStoredTheme();
+      });
+      window.addEventListener("storage", (event) => {
+        if (event.key === "theme") {
+          applyTheme(event.newValue || "light");
+          setupThemeToggle();
+        }
+      });
+    </script>
   </body>
 </html>
