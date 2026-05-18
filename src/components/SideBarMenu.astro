@@ -8,10 +8,10 @@ const getLinkClass = (itemID: string) =>
 ---
 
 <ul class="menu grow shrink menu-md overflow-y-auto relative z-10">
-    <li><a class={getLinkClass("home")} id="home" href="/">Home</a></li>
-    <li><a class={getLinkClass("news")} id="news" href="/news">News & Updates</a></li>
-    <li><a class={getLinkClass("publications")} id="publications" href="/publications">Publications</a></li>
-    <li><a class={getLinkClass("cv")} id="cv" href="/cv">CV</a></li>
+    <li><a class={getLinkClass("home")} id="home" href="/" data-analytics-event="navigation_click" data-analytics-category="navigation" data-analytics-label="home">Home</a></li>
+    <li><a class={getLinkClass("news")} id="news" href="/news" data-analytics-event="navigation_click" data-analytics-category="navigation" data-analytics-label="news">News & Updates</a></li>
+    <li><a class={getLinkClass("publications")} id="publications" href="/publications" data-analytics-event="navigation_click" data-analytics-category="navigation" data-analytics-label="publications">Publications</a></li>
+    <li><a class={getLinkClass("cv")} id="cv" href="/cv" data-analytics-event="navigation_click" data-analytics-category="navigation" data-analytics-label="cv">CV</a></li>
     <!-- <li>
         <a
             class="py-3 text-base"

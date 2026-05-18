@@ -42,7 +42,14 @@ const { publication } = Astro.props;
 
     <div class="mb-8 flex flex-wrap gap-2">
       {publication.links.map((link) => (
-        <a href={link.url} target="_blank" class="btn btn-sm btn-outline">
+        <a
+          href={link.url}
+          target="_blank"
+          class="btn btn-sm btn-outline"
+          data-analytics-event="publication_link_click"
+          data-analytics-category="research"
+          data-analytics-label={`${publication.slug}:${link.label}`}
+        >
           {link.label}
         </a>
       ))}

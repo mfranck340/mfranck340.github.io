@@ -8,6 +8,8 @@ const newsGroups = news.map((yearGroup) => ({
   items: yearGroup.items.map((item) => ({
     ...item,
     year: yearGroup.year,
+    plainTitle: item.title.replace(/<[^>]*>/g, ""),
+    analyticsLabel: `${yearGroup.year}-${item.date}-${item.title.replace(/<[^>]*>/g, "")}`,
     image: (item as { image?: string }).image ?? defaultNewsImage,
     imagePosition: (item as { imagePosition?: string }).imagePosition ?? "center",
     eventLayout: (item as { eventLayout?: string }).eventLayout ?? "split",
@@ -62,7 +64,10 @@ const newsGroups = news.map((yearGroup) => ({
                     "relative block min-h-48 overflow-hidden bg-base-200 md:min-h-full",
                     !item.link && "pointer-events-none",
                   ]}
-                  aria-label={item.title.replace(/<[^>]*>/g, "")}
+                  aria-label={item.plainTitle}
+                  data-analytics-event="news_link_click"
+                  data-analytics-category="research"
+                  data-analytics-label={item.analyticsLabel}
                 >
                   <img
                     src={item.image}
@@ -89,7 +94,13 @@ const newsGroups = news.map((yearGroup) => ({
 
                   <h2 class="mb-3 text-2xl font-bold leading-snug">
                     {item.link ? (
-                      <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-primary">
+                      <a
+                        href={item.link}
+                        class="inline-flex items-center gap-2 transition-colors hover:text-primary"
+                        data-analytics-event="news_link_click"
+                        data-analytics-category="research"
+                        data-analytics-label={item.analyticsLabel}
+                      >
                         <span set:html={item.title} />
                         {item.icon && <span class="shrink-0" set:html={item.icon} />}
                       </a>
@@ -122,7 +133,13 @@ const newsGroups = news.map((yearGroup) => ({
 
                     <h2 class="mb-3 text-3xl font-bold leading-tight">
                       {item.link ? (
-                        <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-secondary">
+                        <a
+                          href={item.link}
+                          class="inline-flex items-center gap-2 transition-colors hover:text-secondary"
+                          data-analytics-event="news_link_click"
+                          data-analytics-category="research"
+                          data-analytics-label={item.analyticsLabel}
+                        >
                           <span set:html={item.title} />
                           {item.icon && <span class="shrink-0" set:html={item.icon} />}
                         </a>
@@ -143,7 +160,10 @@ const newsGroups = news.map((yearGroup) => ({
                       "relative block aspect-[16/7] overflow-hidden bg-base-200",
                       !item.link && "pointer-events-none",
                     ]}
-                    aria-label={item.title.replace(/<[^>]*>/g, "")}
+                    aria-label={item.plainTitle}
+                    data-analytics-event="news_link_click"
+                    data-analytics-category="research"
+                    data-analytics-label={item.analyticsLabel}
                   >
                     <img
                       src={item.image}
@@ -168,7 +188,13 @@ const newsGroups = news.map((yearGroup) => ({
 
                     <h2 class="mb-3 text-3xl font-bold leading-tight">
                       {item.link ? (
-                        <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-secondary">
+                        <a
+                          href={item.link}
+                          class="inline-flex items-center gap-2 transition-colors hover:text-secondary"
+                          data-analytics-event="news_link_click"
+                          data-analytics-category="research"
+                          data-analytics-label={item.analyticsLabel}
+                        >
                           <span set:html={item.title} />
                           {item.icon && <span class="shrink-0" set:html={item.icon} />}
                         </a>
@@ -189,7 +215,10 @@ const newsGroups = news.map((yearGroup) => ({
                       "relative block aspect-[4/3] overflow-hidden bg-base-200 md:aspect-square",
                       !item.link && "pointer-events-none",
                     ]}
-                    aria-label={item.title.replace(/<[^>]*>/g, "")}
+                    aria-label={item.plainTitle}
+                    data-analytics-event="news_link_click"
+                    data-analytics-category="research"
+                    data-analytics-label={item.analyticsLabel}
                   >
                     <img
                       src={item.image}
@@ -218,7 +247,13 @@ const newsGroups = news.map((yearGroup) => ({
 
                   <h2 class="mb-3 text-2xl font-bold leading-snug">
                     {item.link ? (
-                      <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-info">
+                      <a
+                        href={item.link}
+                        class="inline-flex items-center gap-2 transition-colors hover:text-info"
+                        data-analytics-event="news_link_click"
+                        data-analytics-category="research"
+                        data-analytics-label={item.analyticsLabel}
+                      >
                         <span set:html={item.title} />
                         {item.icon && <span class="shrink-0" set:html={item.icon} />}
                       </a>
@@ -259,7 +294,13 @@ const newsGroups = news.map((yearGroup) => ({
 
                   <h2 class="mb-3 text-2xl font-bold leading-snug">
                     {item.link ? (
-                      <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-accent">
+                      <a
+                        href={item.link}
+                        class="inline-flex items-center gap-2 transition-colors hover:text-accent"
+                        data-analytics-event="news_link_click"
+                        data-analytics-category="research"
+                        data-analytics-label={item.analyticsLabel}
+                      >
                         <span set:html={item.title} />
                         {item.icon && <span class="shrink-0" set:html={item.icon} />}
                       </a>

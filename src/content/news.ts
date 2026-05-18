@@ -104,7 +104,7 @@ export const news = [
         date: 'October',
         title: 'RobeSafe Autonomous Driving Demo – AVAD Project',
         description: 'Participated in a public outreach event showcasing an autonomous vehicle developed by the RobeSafe Research Group at the University of Alcalá. The demo presented a real vehicle equipped with onboard sensors for autonomous driving applications.',
-        image: 'http://www.robesafe.es/images/video_smart/2024-Grupo_Robesafe_1225x500.jpg',
+        image: '/news/avad-demo-2024.jpg',
         imagePosition: 'center',
         eventLayout: 'wide-image',
         link: 'https://cultura.uah.es/es/evento/Coche-autonomo.-Proyecto-AVAD/',

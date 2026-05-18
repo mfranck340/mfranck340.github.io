@@ -19,9 +19,9 @@ const latestNews = news
       <text class="text-lg">
         Hey there 👋 My name is Franck Fierro. 
         I obtained a BSc in <b>Computer Science</b> in 2024 and a MSc in <b>Cibersecurity</b> in 2025, both from the 
-        <a href="https://www.uah.es/es/" style="color: #4f46e5; text-decoration: none;">University of Alcalá (UAH)</a>.
+        <a href="https://www.uah.es/es/" style="color: #4f46e5; text-decoration: none;" data-analytics-event="profile_link_click" data-analytics-category="engagement" data-analytics-label="uah">University of Alcalá (UAH)</a>.
         Currently I am a PhD student at UAH focused on <b>Decision Making and Control</b>,
-        as a member of the research staff in the <a href="https://www.linkedin.com/company/robesafe-research-group/" style="color: #4f46e5; text-decoration: none;">RobeSafe Research Group</a>, 
+        as a member of the research staff in the <a href="https://www.linkedin.com/company/robesafe-research-group/" style="color: #4f46e5; text-decoration: none;" data-analytics-event="profile_link_click" data-analytics-category="engagement" data-analytics-label="robesafe_group">RobeSafe Research Group</a>, 
         in the Electronics Department.
         My research interests cover Artificial Intelligence, Vehicle Motion and Self-Driving Vehicle Architectures.
         </text>
@@ -40,7 +40,7 @@ const latestNews = news
             A quick snapshot of recent research updates, papers, and academic milestones.
           </p>
         </div>
-        <a href="/news" class="btn btn-sm btn-primary shrink-0">
+        <a href="/news" class="btn btn-sm btn-primary shrink-0" data-analytics-event="navigation_click" data-analytics-category="navigation" data-analytics-label="latest_news_view_all">
           View all
         </a>
       </div>
@@ -59,7 +59,13 @@ const latestNews = news
 
           <h3 class="mb-3 text-xl font-bold leading-snug">
             {'link' in item && item.link ? (
-              <a href={item.link} class="inline-flex items-center gap-2 transition-colors hover:text-primary">
+              <a
+                href={item.link}
+                class="inline-flex items-center gap-2 transition-colors hover:text-primary"
+                data-analytics-event="news_link_click"
+                data-analytics-category="research"
+                data-analytics-label={`${item.year}-${item.date}-${item.title.replace(/<[^>]*>/g, "")}`}
+              >
                 <span set:html={item.title} />
                 {'icon' in item && item.icon && <span class="shrink-0" set:html={item.icon} />}
               </a>

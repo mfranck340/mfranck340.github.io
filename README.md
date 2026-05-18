@@ -28,6 +28,32 @@ pnpm run dev
 - [tailwindcss](https://tailwindcss.com/)
 - [DaisyUI](https://daisyui.com/)
 
+## Analytics
+
+This project includes optional support for Google Analytics 4.
+
+1. Create a `.env` file in the project root.
+2. Add your GA4 Measurement ID:
+
+```bash
+PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+If the variable is present, the site loads the Google tag on every page and tracks page views automatically.
+
+You can also track custom clicks by adding data attributes to links or buttons:
+
+```html
+<a
+  href="https://example.com"
+  data-analytics-event="portfolio_cta_click"
+  data-analytics-category="engagement"
+  data-analytics-label="homepage-demo-link"
+>
+  Demo
+</a>
+```
+
 ## Project Structure
 
 ```php

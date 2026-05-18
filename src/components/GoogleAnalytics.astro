@@ -1,0 +1,75 @@
+---
+const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim();
+---
+
+{
+  measurementId && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
+      <script define:vars={{ measurementId }}>
+        if (!window.__gaSetup || window.__gaMeasurementId !== measurementId) {
+          window.dataLayer = window.dataLayer || [];
+
+          function gtag() {
+            window.dataLayer.push(arguments);
+          }
+
+          window.gtag = window.gtag || gtag;
+          window.__gaMeasurementId = measurementId;
+          window.__gaSetup = true;
+
+          window.__gaTrackPageView = () => {
+            window.gtag("event", "page_view", {
+              page_title: document.title,
+              page_location: window.location.href,
+              page_path: window.location.pathname,
+            });
+          };
+
+          window.gtag("js", new Date());
+          window.gtag("config", measurementId, {
+            anonymize_ip: true,
+            send_page_view: false,
+          });
+
+          document.addEventListener("astro:page-load", window.__gaTrackPageView);
+
+          document.addEventListener("click", (event) => {
+            const element =
+              event.target instanceof Element
+                ? event.target.closest("[data-analytics-event]")
+                : null;
+
+            if (!element) return;
+
+            const {
+              analyticsEvent,
+              analyticsCategory,
+              analyticsLabel,
+              analyticsValue,
+            } = element.dataset;
+
+            if (!analyticsEvent) return;
+
+            const payload = {};
+
+            if (analyticsCategory) payload.event_category = analyticsCategory;
+            if (analyticsLabel) payload.event_label = analyticsLabel;
+            if (analyticsValue) payload.value = Number(analyticsValue);
+
+            const linkUrl =
+              "href" in element && typeof element.href === "string"
+                ? element.href
+                : element.getAttribute("href");
+
+            if (linkUrl) payload.link_url = linkUrl;
+
+            window.gtag("event", analyticsEvent, payload);
+          });
+        }
+
+        window.__gaTrackPageView?.();
+      </script>
+    </>
+  )
+}
