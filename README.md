@@ -1,6 +1,6 @@
 # Astrofy | Personal Portfolio Website Template
 
-![Astrofy | Personal Porfolio Website Template](public/social_img.webp)
+![Franck Fierro personal website](public/profile.webp)
 
 Astrofy is a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS. Create in minutes a website with a Blog, CV, Project Section, Store, and RSS Feed.
 
@@ -32,14 +32,18 @@ pnpm run dev
 
 This project includes optional support for Google Analytics 4.
 
-1. Create a `.env` file in the project root.
-2. Add your GA4 Measurement ID:
+For local development, create a `.env` file in the project root and add your GA4 Measurement ID:
 
 ```bash
 PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
-If the variable is present, the site loads the Google tag on every page and tracks page views automatically.
+For the GitHub Pages deployment, add the same value as a repository variable:
+
+1. Go to `Settings` -> `Secrets and variables` -> `Actions` -> `Variables`.
+2. Create `PUBLIC_GA_MEASUREMENT_ID` with your GA4 Measurement ID.
+
+If the variable is present, the site loads the Google tag on every page and tracks page views automatically. Without the variable, analytics stays disabled.
 
 You can also track custom clicks by adding data attributes to links or buttons:
 
@@ -94,7 +98,6 @@ You can also track custom clicks by adding data attributes to links or buttons:
 ├── public/
 │   ├── favicon.svg
 │   └── profile.webp
-│   └── social_img.webp
 ├── astro.config.mjs
 ├── tailwind.config.cjs
 ├── package.json
